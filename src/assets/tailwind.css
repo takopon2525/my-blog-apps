@@ -5,3 +5,22 @@
 .nav_link {
   @apply text-teal-200 underline px-2 hover:text-white font-bold text-xl;
 }
+
+.card {
+  @apply bg-white rounded overflow-hidden shadow-md;
+}
+
+.icons {
+  @apply cursor-pointer flex absolute top-1 right-1 z-10;
+}
+
+.icon {
+  @apply flex justify-center align-middle items-center w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-400 transition duration-500 ease-in-out;
+}
+
+.icon_img {
+  @apply h-4 w-auto;
+}
+.blogCard_icon_img {
+  @apply h-6 w-6 inline-block;
+}
