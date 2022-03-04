@@ -2,7 +2,22 @@
 import { ref } from "@vue/reactivity";
 import BlogCard from "../components/BlogCard.vue";
 import { Switch } from "@headlessui/vue";
+import sfc_img from "../assets/img/sfc_img.png";
+import vuex_img from "../assets/img/vuex_img.png";
 
+const images = {
+  sfc: sfc_img,
+  vuex: vuex_img,
+};
+
+const blogPosts = [
+  {
+    blogImage: images.sfc,
+  },
+  {
+    blogImage: images.vuex,
+  },
+];
 const enabled = ref(false);
 </script>
 
@@ -45,8 +60,12 @@ const enabled = ref(false);
         </Switch>
       </div>
     </div>
-    <div class="my-5">
-      <BlogCard :editEnabled="enabled" />
+    <div
+      class="my-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 items-center"
+    >
+      <div v-for="(blogPost, i) in blogPosts" :key="i">
+        <BlogCard :editEnabled="enabled" :post="blogPost" />
+      </div>
     </div>
   </div>
 </template>
