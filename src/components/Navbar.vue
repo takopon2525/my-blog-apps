@@ -33,8 +33,8 @@ const toggle = () => {
       class="w-full md:flex md:items-center md:w-auto"
     >
       <div class="md:flex md:flex-row md:items-center md:w-auto flex flex-col">
-        <a class="nav_link" to="#">ブログ</a>
-        <a class="nav_link" to="#">投稿の作成</a>
+        <router-link class="nav_link" to="#">ブログ</router-link>
+        <router-link class="nav_link" to="/create-post">投稿の作成</router-link>
       </div>
     </div>
   </nav>
