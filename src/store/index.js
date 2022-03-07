@@ -3,6 +3,7 @@ import { createStore } from "vuex";
 const store = createStore({
   state: {
     blogHTML: null,
+    blogTitle: null,
     blogTitleImageFile: null,
     blogTitleImageName: null,
     blogTitleImageURL: null,
@@ -10,6 +11,9 @@ const store = createStore({
   mutations: {
     setBlogHTML(state, payload) {
       state.blogHTML = payload;
+    },
+    setBlogTitle(state, payload) {
+      state.blogTitle = payload;
     },
     setBlogTitleImageFile(state, payload) {
       state.blogTitleImageFile = payload;
