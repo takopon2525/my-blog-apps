@@ -2,23 +2,41 @@
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
 import { ref, watchEffect } from "vue";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
-const content = ref(null);
+const store = useStore();
+const router = useRouter();
+const content = ref("ここから入力してください。");
 
 watchEffect(() => {
   if (content.value) {
-    console.log("content.value", content.value);
-    // ここで情報をセットする
+    store.commit("setBlogHTML", content.value);
   }
 });
 </script>
 <template>
-  <div class="mx-auto w-4/5">
-    <QuillEditor
-      v-model:content="content"
-      contentType="html"
-      theme="snow"
-      toolbar="full"
-    />
+  <div class="my-5">
+    <div class="mx-auto w-4/5">
+      <input
+        type="text"
+        class="rounded-sm appearance-none border-b-2 border-gray-600 mr-2 focus:outline-none focus:border-blue-200"
+        placeholder="タイトルを入力してください。"
+      />
+      <label for="blog-photo" class="createPost_label">カバー画像追加</label>
+    </div>
+    <div class="mx-auto w-4/5">
+      <QuillEditor
+        v-model:content="content"
+        contentType="html"
+        theme="snow"
+        toolbar="full"
+      />
+    </div>
   </div>
 </template>
+<style lang="scss">
+.ql-container.ql-snow {
+  min-height: 300px !important;
+}
+</style>
