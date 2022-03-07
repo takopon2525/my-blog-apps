@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from "vue";
+import { useStore } from "vuex";
 import {
   TransitionRoot,
   TransitionChild,
@@ -7,6 +8,7 @@ import {
   DialogTitle,
 } from "@headlessui/vue";
 
+const store = useStore();
 const isOpen = ref(false);
 
 const closeModal = () => {
@@ -21,7 +23,8 @@ const openModal = () => {
     <button
       type="button"
       @click="openModal"
-      class="px-4 py-2 text-sm font-medium text-white bg-black rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+      class="button button--disabled"
+      :disabled="!store.state.blogTitleImageName"
     >
       画像の確認
     </button>
