@@ -4,6 +4,7 @@ import "@vueup/vue-quill/dist/vue-quill.snow.css";
 import { ref, watchEffect } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+import ImgFileConfirmModal from "../components/modals/ImgFileConfirmModal.vue";
 
 const store = useStore();
 const router = useRouter();
@@ -33,6 +34,7 @@ watchEffect(() => {
         @change="handleFileUpload()"
         accept=".png,.jpgs,.jpeg"
       />
+      <ImgFileConfirmModal />
     </div>
     <div class="mx-auto w-4/5">
       <QuillEditor
