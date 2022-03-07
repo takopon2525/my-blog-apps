@@ -1,3 +1,21 @@
+<script setup>
+import { ref } from "vue";
+import {
+  TransitionRoot,
+  TransitionChild,
+  Dialog,
+  DialogTitle,
+} from "@headlessui/vue";
+
+const isOpen = ref(false);
+
+const closeModal = () => {
+  isOpen.value = false;
+};
+const openModal = () => {
+  isOpen.value = true;
+};
+</script>
 <template>
   <div>
     <button
@@ -53,38 +71,3 @@
     </Dialog>
   </TransitionRoot>
 </template>
-
-<script>
-import { ref } from "vue";
-import {
-  TransitionRoot,
-  TransitionChild,
-  Dialog,
-  DialogOverlay,
-  DialogTitle,
-} from "@headlessui/vue";
-
-export default {
-  components: {
-    TransitionRoot,
-    TransitionChild,
-    Dialog,
-    DialogOverlay,
-    DialogTitle,
-  },
-
-  setup() {
-    const isOpen = ref(false);
-
-    return {
-      isOpen,
-      closeModal() {
-        isOpen.value = false;
-      },
-      openModal() {
-        isOpen.value = true;
-      },
-    };
-  },
-};
-</script>
