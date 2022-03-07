@@ -19,7 +19,7 @@ watchEffect(() => {
 </script>
 <template>
   <div class="my-5">
-    <div class="mx-auto w-4/5">
+    <div class="flex gap-2 mx-auto w-4/5 mb-5">
       <input
         type="text"
         class="rounded-sm appearance-none border-b-2 border-gray-600 mr-2 focus:outline-none focus:border-blue-200"
