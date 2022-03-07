@@ -8,6 +8,7 @@ import { useRouter } from "vue-router";
 const store = useStore();
 const router = useRouter();
 const content = ref("ここから入力してください。");
+const handleFileUpload = () => {};
 
 watchEffect(() => {
   if (content.value) {
@@ -23,7 +24,15 @@ watchEffect(() => {
         class="rounded-sm appearance-none border-b-2 border-gray-600 mr-2 focus:outline-none focus:border-blue-200"
         placeholder="タイトルを入力してください。"
       />
-      <label for="blog-photo" class="createPost_label">カバー画像追加</label>
+      <label for="blog-photo" class="button">カバー画像追加</label>
+      <input
+        type="file"
+        ref="blogPhoto"
+        id="blog-photo"
+        class="hidden"
+        @change="handleFileUpload()"
+        accept=".png,.jpgs,.jpeg"
+      />
     </div>
     <div class="mx-auto w-4/5">
       <QuillEditor
