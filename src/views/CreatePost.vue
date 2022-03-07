@@ -1,7 +1,7 @@
 <script setup>
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
-import { ref, watchEffect, computed } from "vue";
+import { ref, watchEffect } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import ImgFileConfirmModal from "../components/modals/ImgFileConfirmModal.vue";
@@ -13,7 +13,6 @@ const blogPhoto = ref(null);
 const content = ref("ここから入力してください。");
 let file = null;
 
-const blogTitleImageName = computed(() => store.state.blogTitleImageName);
 const handleFileUpload = () => {
   file = blogPhoto.value.files[0];
   store.commit("setBlogTitleImageFile", file);
@@ -49,8 +48,8 @@ watchEffect(() => {
         accept=".png,.jpgs,.jpeg"
       />
       <ImgFileConfirmModal />
-      <span v-if="blogTitleImageName"
-        >選択されたファイル名：{{ blogTitleImageName }}</span
+      <span v-if="store.state.blogTitleImageName"
+        >選択されたファイル名：{{ store.state.blogTitleImageName }}</span
       >
       <span v-else>ファイルは未選択です。</span>
     </div>
