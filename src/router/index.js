@@ -1,6 +1,7 @@
 import * as vueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import CreatePost from "../views/CreatePost.vue";
+import BlogPreview from "../views/BlogPreview.vue";
 
 const routes = [
   {
@@ -16,6 +17,14 @@ const routes = [
     component: CreatePost,
     meta: {
       title: "CreatePost",
+    },
+  },
+  {
+    path: "/blog-preview",
+    name: "BlogPreview",
+    component: BlogPreview,
+    meta: {
+      title: "BlogPreview",
     },
   },
 ];

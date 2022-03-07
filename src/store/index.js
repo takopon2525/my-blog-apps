@@ -2,7 +2,7 @@ import { createStore } from "vuex";
 
 const store = createStore({
   state: {
-    blogHTML: null,
+    blogHTML: "ここから入力してください。",
     blogTitle: null,
     blogTitleImageFile: null,
     blogTitleImageName: null,

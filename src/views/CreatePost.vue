@@ -1,17 +1,33 @@
 <script setup>
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
-import { ref, watchEffect } from "vue";
+import { ref, computed } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import ImgFileConfirmModal from "../components/modals/ImgFileConfirmModal.vue";
 
 const store = useStore();
 const router = useRouter();
-const blogTitle = ref(null);
 const blogPhoto = ref(null);
-const content = ref("ここから入力してください。");
 let file = null;
+
+const blogTitle = computed({
+  get() {
+    return store.state.blogTitle;
+  },
+  set(val) {
+    store.commit("setBlogTitle", val);
+  },
+});
+
+const content = computed({
+  get() {
+    return store.state.blogHTML;
+  },
+  set(val) {
+    store.commit("setBlogHTML", val);
+  },
+});
 
 const handleFileUpload = () => {
   file = blogPhoto.value.files[0];
@@ -20,14 +36,9 @@ const handleFileUpload = () => {
   store.commit("setBlogTitleImageURL", URL.createObjectURL(file));
 };
 
-watchEffect(() => {
-  if (content.value) {
-    store.commit("setBlogHTML", content.value);
-  }
-  if (blogTitle.value) {
-    store.commit("setBlogTitle", blogTitle.value);
-  }
-});
+const handlePostBlog = () => {
+  router.push("/");
+};
 </script>
 <template>
   <div class="my-5 mx-auto w-4/5">
@@ -65,12 +76,14 @@ watchEffect(() => {
       <button
         class="button mr-2 button--disabled"
         :disabled="!store.state.blogTitle || !store.state.blogTitleImageURL"
+        @click="handlePostBlog"
       >
         投稿
       </button>
       <button
         class="button mr-2 button--disabled"
         :disabled="!store.state.blogTitle || !store.state.blogTitleImageURL"
+        @click="router.push('/blog-preview')"
       >
         プレビュー
       </button>
