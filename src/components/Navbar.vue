@@ -1,9 +1,17 @@
 <script setup>
 import { ref } from "vue";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
+const store = useStore();
+const router = useRouter();
 const isOpen = ref(false);
 const toggle = () => {
   isOpen.value = !isOpen.value;
+};
+const handleCreatePost = () => {
+  store.commit("init");
+  router.push("/create-post");
 };
 </script>
 <template>
@@ -33,8 +41,8 @@ const toggle = () => {
       class="w-full md:flex md:items-center md:w-auto"
     >
       <div class="md:flex md:flex-row md:items-center md:w-auto flex flex-col">
-        <router-link class="nav_link" to="#">ブログ</router-link>
-        <router-link class="nav_link" to="/create-post">投稿の作成</router-link>
+        <router-link class="nav_link" to="/">ブログ</router-link>
+        <button class="nav_link" @click="handleCreatePost">投稿の作成</button>
       </div>
     </div>
   </nav>

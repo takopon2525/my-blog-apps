@@ -9,6 +9,13 @@ const store = createStore({
     blogTitleImageURL: null,
   },
   mutations: {
+    init(state) {
+      state.blogHTML = "ここから入力してください。";
+      state.blogTitle = null;
+      state.blogTitleImageFile = null;
+      state.blogTitleImageName = null;
+      state.blogTitleImageURL = null;
+    },
     setBlogHTML(state, payload) {
       state.blogHTML = payload;
     },
