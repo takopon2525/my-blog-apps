@@ -42,7 +42,7 @@ const handleCreatePost = () => {
     >
       <div class="md:flex md:flex-row md:items-center md:w-auto flex flex-col">
         <router-link class="nav_link" to="/">ブログ</router-link>
-        <button class="nav_link" @click="handleCreatePost">投稿の作成</button>
+        <a class="nav_link" @click="handleCreatePost">投稿の作成</a>
       </div>
     </div>
   </nav>
