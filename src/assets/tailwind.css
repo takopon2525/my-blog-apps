@@ -24,3 +24,11 @@
 .blogCard_icon_img {
   @apply h-6 w-6 inline-block;
 }
+
+.button {
+  @apply rounded-lg text-base bg-gray-600 px-3 py-1 text-white font-bold transition ease-in-out delay-150 hover:bg-gray-400 duration-300 cursor-pointer;
+}
+
+.button--disabled {
+  @apply disabled:cursor-not-allowed disabled:transition-none disabled:bg-gray-300 disabled:hover:bg-gray-300;
+}
