@@ -1,5 +1,6 @@
 <script setup>
 import { QuillEditor } from "@vueup/vue-quill";
+import ImageUploader from "quill-image-uploader";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
@@ -10,6 +11,26 @@ const store = useStore();
 const router = useRouter();
 const blogPhoto = ref(null);
 let file = null;
+const modules = {
+  name: "imageUploader",
+  module: ImageUploader,
+  options: {
+    upload: (file) => {
+      console.log("file", file);
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve(
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/JavaScript-logo.png/480px-JavaScript-logo.png"
+          );
+        }, 500);
+      });
+    },
+  },
+};
+
+const hoge = () => {
+  console.log("aa");
+};
 
 const blogTitle = computed({
   get() {
@@ -70,6 +91,7 @@ const handlePostBlog = () => {
         contentType="html"
         theme="snow"
         toolbar="full"
+        :modules="modules"
       />
     </div>
     <div class="mt-5">
