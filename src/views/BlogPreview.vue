@@ -4,6 +4,14 @@ import { useRouter } from "vue-router";
 
 const store = useStore();
 const router = useRouter();
+const handlePostBlog = () => {
+  try {
+    await store.dispatch("uploadPost");
+  } catch (err) {
+    return;
+  }
+  router.push("/");
+};
 </script>
 <template>
   <div>
