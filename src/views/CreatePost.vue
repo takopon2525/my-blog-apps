@@ -2,14 +2,16 @@
 import { QuillEditor } from "@vueup/vue-quill";
 import ImageUploader from "quill-image-uploader";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
-import { ref, computed } from "vue";
+import { ref as vueRef, computed } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import ImgFileConfirmModal from "../components/modals/ImgFileConfirmModal.vue";
+import { storage } from "../firebase/config";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 const store = useStore();
 const router = useRouter();
-const blogPhoto = ref(null);
+const blogPhoto = vueRef(null);
 let file = null;
 const modules = {
   name: "imageUploader",
@@ -18,18 +20,35 @@ const modules = {
     upload: (file) => {
       console.log("file", file);
       return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          resolve(
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/JavaScript-logo.png/480px-JavaScript-logo.png"
-          );
-        }, 500);
+        const storageRef = ref(
+          storage,
+          `documents/blogPostPhotos/${file.name}`
+        );
+        const uploadTask = uploadBytesResumable(storageRef, file);
+        uploadTask.on(
+          "state_changed",
+          async (snapshot) => {
+            const progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log("Upload is " + progress + "% done");
+            switch (snapshot.state) {
+              case "paused":
+                console.log("Upload is paused");
+                break;
+              case "running":
+                console.log("Upload is running");
+                break;
+            }
+          },
+          (error) => {},
+          async () => {
+            const downLoadURL = await getDownloadURL(uploadTask.snapshot.ref);
+            resolve(downLoadURL);
+          }
+        );
       });
     },
   },
-};
-
-const hoge = () => {
-  console.log("aa");
 };
 
 const blogTitle = computed({
