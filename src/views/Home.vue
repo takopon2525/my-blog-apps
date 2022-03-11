@@ -1,23 +1,13 @@
 <script setup>
-import { ref } from "@vue/reactivity";
+import { ref, computed } from "@vue/reactivity";
 import BlogCard from "../components/BlogCard.vue";
 import { Switch } from "@headlessui/vue";
-import sfc_img from "../assets/img/sfc_img.png";
-import vuex_img from "../assets/img/vuex_img.png";
+import { useStore } from "vuex";
 
-const images = {
-  sfc: sfc_img,
-  vuex: vuex_img,
-};
-
-const blogPosts = [
-  {
-    blogImage: images.sfc,
-  },
-  {
-    blogImage: images.vuex,
-  },
-];
+const store = useStore();
+const blogPosts = computed(() => {
+  return store.state.blogPosts;
+});
 const enabled = ref(false);
 </script>
 

@@ -10,6 +10,8 @@
   "dependencies": {
     "@vueup/vue-quill": "^1.0.0-beta.8",
     "firebase": "^9.6.8",
+    "highlight.js": "^11.4.0",
+    "quill-image-uploader": "^1.2.2",
     "vue": "^3.2.25",
     "vue-router": "^4.0.13",
     "vuex": "^4.0.2"
