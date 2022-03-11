@@ -1,6 +1,16 @@
 <script setup>
+import { useStore } from "vuex";
+import { onMounted, onUnmounted } from "vue";
 import Navbar from "./components/Navbar.vue";
 import Footer from "./components/Footer.vue";
+
+const store = useStore();
+onMounted(() => {
+  store.dispatch("startPostsListner");
+});
+onUnmounted(() => {
+  store.dispatch("stopPostsListner");
+});
 </script>
 
 <template>

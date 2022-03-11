@@ -4,6 +4,8 @@ import {
   collection,
   getDoc,
   doc,
+  query,
+  orderBy,
   setDoc,
   Timestamp,
   onSnapshot,
@@ -13,6 +15,8 @@ import router from "../router/index";
 
 const store = createStore({
   state: {
+    unsubscribe: null,
+    blogPosts: [],
     blogHTML: "ここから入力してください。",
     blogTitle: null,
     blogTitleImageFile: null,
@@ -26,6 +30,9 @@ const store = createStore({
       state.blogTitleImageFile = null;
       state.blogTitleImageName = null;
       state.blogTitleImageURL = null;
+    },
+    setBlogPosts(state, payload) {
+      state.blogPosts = payload;
     },
     setBlogHTML(state, payload) {
       state.blogHTML = payload;
@@ -44,6 +51,26 @@ const store = createStore({
     },
   },
   actions: {
+    startPostsListner(context) {
+      const q = query(collection(db, "blogPost"), orderBy("date", "desc"));
+      context.state.unsubscribe = onSnapshot(q, (snapshot) => {
+        let results = [];
+        snapshot.forEach((doc) => {
+          const data = {
+            blogId: doc.data().blogId,
+            blogHTML: doc.data().blogHTML,
+            blogTitle: doc.data().blogTitle,
+            blogImageURL: doc.data().blogImageURL,
+            blogCreatedAt: doc.data().blogCreatedAt,
+          };
+          results.push(data);
+        });
+        context.commit("setBlogPosts", results);
+      });
+    },
+    stopPostsListner(context) {
+      context.state.unsubscribe();
+    },
     async uploadPost(context) {
       const storageRef = ref(
         storage,
