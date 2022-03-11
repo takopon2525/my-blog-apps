@@ -76,7 +76,12 @@ const handleFileUpload = () => {
   store.commit("setBlogTitleImageURL", URL.createObjectURL(file));
 };
 
-const handlePostBlog = () => {
+const handlePostBlog = async () => {
+  try {
+    await store.dispatch("uploadPost");
+  } catch (err) {
+    return;
+  }
   router.push("/");
 };
 </script>
