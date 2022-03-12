@@ -1,5 +1,13 @@
 import { createStore } from "vuex";
-import { db, storage } from "../firebase/config";
+import { auth, db, storage } from "../firebase/config";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+  setPersistence,
+  browserSessionPersistence,
+} from "firebase/auth";
 import {
   collection,
   getDoc,

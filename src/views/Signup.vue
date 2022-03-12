@@ -14,7 +14,7 @@ const store = useStore();
 const router = useRouter();
 const handleSubmit = async () => {
   try {
-    loading = true;
+    loading.value = true;
     await store.dispatch("signup", {
       email: email.value,
       password: password.value,
