@@ -4,12 +4,22 @@ import Delete from "../assets/icons/trash-regular.svg";
 import Reload from "../assets/icons/reload.svg";
 import createdDate from "../assets/icons/created_date.svg";
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 
 const router = useRouter();
+const store = useStore();
 const props = defineProps({
   editEnabled: Boolean,
   post: Object,
 });
+const editPost = () => {
+  store.commit("setBlogTitle", props.blogTitle);
+  store.commit("setBlogTitleImageName", props.blogTitleImageName);
+  store.commit("setBlogTitleImageURL", props.blogTitleImageURL);
+  store.commit("setBlogHTML", props.blogHTML);
+  router.push("/edit-blog");
+};
+const deletePost = () => {};
 </script>
 <template>
   <div class="card relative">
@@ -51,10 +61,10 @@ const props = defineProps({
       </div>
     </div>
     <div class="icons" v-if="props.editEnabled">
-      <div class="icon">
+      <div class="icon" @click="editPost(props.post)">
         <img :src="Edit" class="icon_img" />
       </div>
-      <div class="icon ml-2">
+      <div class="icon ml-2" @click="deletePost(props.post)">
         <img :src="Delete" class="icon_img" />
       </div>
     </div>
