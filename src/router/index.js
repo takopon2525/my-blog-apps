@@ -3,6 +3,8 @@ import Home from "../views/Home.vue";
 import CreatePost from "../views/CreatePost.vue";
 import BlogPreview from "../views/BlogPreview.vue";
 import Blog from "../views/Blog.vue";
+import Login from "../views/Login.vue";
+import Signup from "../views/Signup.vue";
 
 const routes = [
   {
@@ -34,6 +36,22 @@ const routes = [
     component: Blog,
     meta: {
       title: "Blog",
+    },
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
+    meta: {
+      title: "Login",
+    },
+  },
+  {
+    path: "/signup",
+    name: "Signup",
+    component: Signup,
+    meta: {
+      title: "Signup",
     },
   },
 ];
