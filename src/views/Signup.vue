@@ -2,6 +2,7 @@
 import { ref } from "@vue/reactivity";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+import Arrow from "../assets/icons/arrow.svg";
 
 const nickName = ref("");
 const email = ref("");
@@ -84,19 +85,7 @@ const handleSubmit = async () => {
               <span>登録</span>
               <div v-if="loading" class="button_loading"></div>
               <span v-if="!loading">
-                <svg
-                  class="h-6 w-6"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
+                <img :src="Arrow" class="h-6 w-auto" />
               </span>
             </button>
           </div>
