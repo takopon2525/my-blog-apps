@@ -13,10 +13,10 @@ const props = defineProps({
   post: Object,
 });
 const editPost = () => {
-  store.commit("setBlogTitle", props.blogTitle);
-  store.commit("setBlogTitleImageName", props.blogTitleImageName);
-  store.commit("setBlogTitleImageURL", props.blogTitleImageURL);
-  store.commit("setBlogHTML", props.blogHTML);
+  store.commit("setBlogTitle", props.post.blogTitle);
+  store.commit("setBlogTitleImageName", props.post.blogImageName);
+  store.commit("setBlogTitleImageURL", props.post.blogImageURL);
+  store.commit("setBlogHTML", props.post.blogHTML);
   router.push("/edit-blog");
 };
 const deletePost = () => {};
