@@ -1,5 +1,13 @@
 import { createStore } from "vuex";
-import { db, storage } from "../firebase/config";
+import { auth, db, storage } from "../firebase/config";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+  setPersistence,
+  browserSessionPersistence,
+} from "firebase/auth";
 import {
   collection,
   getDoc,
@@ -16,6 +24,8 @@ import router from "../router/index";
 const store = createStore({
   state: {
     unsubscribe: null,
+    user: null,
+    userInfo: {},
     blogPosts: [],
     blogHTML: "ここから入力してください。",
     blogTitle: null,
@@ -30,6 +40,12 @@ const store = createStore({
       state.blogTitleImageFile = null;
       state.blogTitleImageName = null;
       state.blogTitleImageURL = null;
+    },
+    setUser(state, payload) {
+      state.user = payload;
+    },
+    setUserInfo(state, payload) {
+      state.userInfo = payload;
     },
     setBlogPosts(state, payload) {
       state.blogPosts = payload;
@@ -70,6 +86,41 @@ const store = createStore({
     },
     stopPostsListner(context) {
       context.state.unsubscribe();
+    },
+    async login(context, { email, password }) {
+      try {
+        await setPersistence(auth, browserSessionPersistence);
+        const res = await signInWithEmailAndPassword(auth, email, password);
+        context.commit("setUser", { ...res.user });
+        if (!res) throw new Error("could not complete login");
+      } catch (err) {
+        alert(err.message);
+      }
+    },
+    async signup(context, { email, password }) {
+      const res = await createUserWithEmailAndPassword(auth, email, password);
+      if (res) {
+        context.commit("setUser", res.user);
+      } else {
+        throw new Error("could not complete signup");
+      }
+    },
+    async userSettings(context, { nickName, uid, email }) {
+      const docRef = doc(db, "users", uid);
+      const docData = {
+        name: nickName,
+        emial: email,
+      };
+      await setDoc(docRef, docData);
+    },
+    async getUser(context) {
+      const docRef = doc(db, "users", context.state.user.uid);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        context.commit("setUserInfo", { ...docSnap.data() });
+      } else {
+        context.commit("setUserInfo", {});
+      }
     },
     async uploadPost(context) {
       const storageRef = ref(

@@ -1,10 +1,11 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 
 const store = useStore();
 const router = useRouter();
+const user = computed(() => store.state.user);
 const isOpen = ref(false);
 const toggle = () => {
   isOpen.value = !isOpen.value;
@@ -40,9 +41,20 @@ const handleCreatePost = () => {
       :class="isOpen ? '' : 'hidden'"
       class="w-full md:flex md:items-center md:w-auto"
     >
-      <div class="md:flex md:flex-row md:items-center md:w-auto flex flex-col">
+      <div
+        v-if="user"
+        class="md:flex md:flex-row md:items-center md:w-auto flex flex-col"
+      >
         <router-link class="nav_link" to="/">ブログ</router-link>
         <a class="nav_link" @click="handleCreatePost">投稿の作成</a>
+      </div>
+      <div
+        v-if="!user"
+        class="md:flex md:flex-row md:items-center md:w-auto flex flex-col"
+      >
+        <router-link class="nav_link" to="/">ブログ</router-link>
+        <router-link class="nav_link" to="/login">ログイン</router-link>
+        <router-link class="nav_link" to="/signup">アカウント作成</router-link>
       </div>
     </div>
   </nav>

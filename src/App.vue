@@ -1,6 +1,6 @@
 <script setup>
 import { useStore } from "vuex";
-import { onMounted, onUnmounted } from "vue";
+import { onMounted, onUnmounted, watchEffect } from "vue";
 import Navbar from "./components/Navbar.vue";
 import Footer from "./components/Footer.vue";
 
@@ -10,6 +10,11 @@ onMounted(() => {
 });
 onUnmounted(() => {
   store.dispatch("stopPostsListner");
+});
+watchEffect(() => {
+  if (store.state.user) {
+    store.dispatch("getUser");
+  }
 });
 </script>
 
