@@ -5,6 +5,7 @@ import { useRoute } from "vue-router";
 import hljs from "highlight.js";
 import { onMounted } from "vue";
 import "highlight.js/styles/xcode.css";
+import Created from "../assets/icons/created_date.svg";
 
 const route = useRoute();
 const store = useStore();
@@ -23,34 +24,21 @@ onMounted(() => {
   <div class="mx-20">
     <div class="flex">
       <div
-        class="text-black bg-secondary-100 text-xs uppercase font-bold rounded-full p-2 top-0 mt-2"
+        class="text-black flex items-center bg-secondary-100 text-xs uppercase font-bold rounded-full p-2 top-0 mt-2"
       >
-        <svg
-          class="h-6 w-6 inline-block"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
+        <img :src="Created" class="h-6 w-auto" />
         <span>{{
           new Date(blogPost.blogCreatedAt.seconds * 1000).toLocaleDateString()
         }}</span>
       </div>
     </div>
-    <div>
+    <div class="mb-3">
       <h2>{{ blogPost.blogTitle }}</h2>
     </div>
     <div>
-      <img width="400" height="auto" :src="blogPost.blogImageURL" />
+      <img :src="blogPost.blogImageURL" />
     </div>
-    <div v-html="blogPost.blogHTML"></div>
+    <div class="my-5" v-html="blogPost.blogHTML"></div>
   </div>
 </template>
 <style lang="scss" scoped>
