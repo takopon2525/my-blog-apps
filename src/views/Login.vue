@@ -59,7 +59,7 @@ const handleSubmit = async () => {
             <button
               :disabled="loading"
               type="submit"
-              class="login_button flex mt-2 items-center justify-center"
+              class="form_button flex mt-2 items-center justify-center"
               :class="loading ? 'button--disabled' : ''"
             >
               <span class="mr-2 uppercase">ログイン</span>
