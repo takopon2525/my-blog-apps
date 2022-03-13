@@ -2,6 +2,8 @@ import * as vueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import CreatePost from "../views/CreatePost.vue";
 import BlogPreview from "../views/BlogPreview.vue";
+import EditBlog from "../views/EditBlog.vue";
+import EditBlogPreview from "../views/EditBlogPreview.vue";
 import Blog from "../views/Blog.vue";
 import Login from "../views/Login.vue";
 import Signup from "../views/Signup.vue";
@@ -52,6 +54,22 @@ const routes = [
     component: Signup,
     meta: {
       title: "Signup",
+    },
+  },
+  {
+    path: "/edit-blog",
+    name: "EditBlog",
+    component: EditBlog,
+    meta: {
+      title: "EditBlog",
+    },
+  },
+  {
+    path: "/editBlog-preview",
+    name: "EditBlogPreview",
+    component: EditBlogPreview,
+    meta: {
+      title: "EditBlogPreview",
     },
   },
 ];

@@ -76,6 +76,7 @@ const store = createStore({
             blogId: doc.data().blogId,
             blogHTML: doc.data().blogHTML,
             blogTitle: doc.data().blogTitle,
+            blogImageName: doc.data().blogImageName,
             blogImageURL: doc.data().blogImageURL,
             blogCreatedAt: doc.data().blogCreatedAt,
           };
