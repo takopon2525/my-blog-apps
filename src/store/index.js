@@ -169,4 +169,8 @@ const store = createStore({
   },
 });
 
+onAuthStateChanged(auth, (user) => {
+  store.commit("setUser", user);
+});
+
 export default store;
