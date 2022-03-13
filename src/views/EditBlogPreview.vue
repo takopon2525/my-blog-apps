@@ -6,7 +6,11 @@ const store = useStore();
 const router = useRouter();
 const handlePostBlog = async () => {
   try {
-    await store.dispatch("uploadPost");
+    if (store.state.blogTitleImageFile) {
+      await store.dispatch("editPostAll");
+    } else {
+      await store.dispatch("editPost");
+    }
   } catch (err) {
     return;
   }
@@ -28,7 +32,7 @@ const handlePostBlog = async () => {
         戻る
       </button>
       <button class="button mr-2" @click="handlePostBlog">
-        <span>投稿</span>
+        <span>編集</span>
       </button>
     </div>
   </div>

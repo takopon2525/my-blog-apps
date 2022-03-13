@@ -29,7 +29,7 @@ const enabled = ref(false);
     </div>
     <div class="flex justify-between mt-5">
       <h2 class="font-bold">最新の投稿</h2>
-      <div class="flex items-center">
+      <div v-if="store.state.user" class="flex items-center">
         <p
           class="font-bold pr-2 transition ease-in-out duration-200"
           :class="enabled ? 'text-black' : 'text-gray-400'"

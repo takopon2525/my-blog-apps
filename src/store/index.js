@@ -17,6 +17,8 @@ import {
   setDoc,
   Timestamp,
   onSnapshot,
+  deleteDoc,
+  updateDoc,
 } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import router from "../router/index";
@@ -165,6 +167,66 @@ const store = createStore({
           router.push({ path: "/" });
         }
       );
+    },
+    async editPostAll(context) {
+      const storageRef = ref(
+        storage,
+        `documents/blogTitlePhotos/${context.state.editBlogTitleImageName}`
+      );
+      const uploadTask = uploadBytesResumable(
+        storageRef,
+        context.state.editBlogTitleImageFile
+      );
+      uploadTask.on(
+        "state_changed",
+        async (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("Upload is " + progress + "% done");
+          switch (snapshot.state) {
+            case "paused":
+              console.log("Upload is paused");
+              break;
+            case "running":
+              console.log("Upload is running");
+              break;
+          }
+        },
+        (error) => {},
+        async () => {
+          const downLoadURL = await getDownloadURL(uploadTask.snapshot.ref);
+          const docRef = doc(db, "blogPost", context.state.edtiBlogPost.blogId);
+          const timestamp = await Date.now();
+          const docData = {
+            blogId: docRef.id,
+            blogTitle: context.state.editBlogTitle,
+            blogImageURL: downLoadURL,
+            blogHTML: context.state.editBlogHTML,
+            blogEditedAt: Timestamp.fromDate(new Date()),
+            date: timestamp,
+            blogEditedBy: context.state.userInfo.name,
+          };
+          await updateDoc(docRef, { ...docData });
+          router.push({ path: "/" });
+        }
+      );
+    },
+    async editPost(context) {
+      const docRef = doc(db, "blogPost", context.state.edtiBlogPost.blogId);
+      const timestamp = await Date.now();
+      const docData = {
+        blogId: docRef.id,
+        blogTitle: context.state.editBlogTitle,
+        blogHTML: context.state.editBlogHTML,
+        blogEditedAt: Timestamp.fromDate(new Date()),
+        date: timestamp,
+        blogEditedBy: context.state.userInfo.name,
+      };
+      await updateDoc(docRef, { ...docData });
+      router.push({ path: "/" });
+    },
+    async deleteBlog(context, { blogId }) {
+      await deleteDoc(doc(db, "blogPost", blogId));
     },
   },
 });

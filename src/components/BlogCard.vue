@@ -1,10 +1,10 @@
 <script setup>
 import Edit from "../assets/icons/edit-regular.svg";
-import Delete from "../assets/icons/trash-regular.svg";
 import Reload from "../assets/icons/reload.svg";
 import createdDate from "../assets/icons/created_date.svg";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
+import DeleteModal from "../components/modals/DeleteModal.vue";
 
 const router = useRouter();
 const store = useStore();
@@ -64,9 +64,7 @@ const deletePost = () => {};
       <div class="icon" @click="editPost(props.post)">
         <img :src="Edit" class="icon_img" />
       </div>
-      <div class="icon ml-2" @click="deletePost(props.post)">
-        <img :src="Delete" class="icon_img" />
-      </div>
+      <DeleteModal :post="props.post" />
     </div>
   </div>
 </template>
