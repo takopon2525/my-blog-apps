@@ -78,7 +78,11 @@ const handleFileUpload = () => {
 
 const handlePostBlog = async () => {
   try {
-    await store.dispatch("uploadPost");
+    if (file) {
+      await store.dispatch("editPostAll");
+    } else {
+      await store.dispatch("editPost");
+    }
   } catch (err) {
     return;
   }
