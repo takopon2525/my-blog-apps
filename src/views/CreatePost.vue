@@ -90,7 +90,7 @@ const handlePostBlog = async () => {
     loading.value = false;
     store.commit("setSnack", {
       isOpen: true,
-      message: "プロフィール投稿に失敗しました。",
+      message: "ブログ投稿に失敗しました。",
       type: "failed",
     });
     return;

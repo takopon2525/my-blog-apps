@@ -236,7 +236,6 @@ const store = createStore({
       );
     },
     async editPost(context) {
-      // blogId参照間違い
       const docRef = doc(db, "blogPost", context.state.blogId);
       const timestamp = Date.now();
       const docData = {

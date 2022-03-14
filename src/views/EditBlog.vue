@@ -97,7 +97,6 @@ const handlePostBlog = async () => {
       message: "ブログ記事の編集に失敗しました。",
       type: "failed",
     });
-    console.log("err", err.message);
     return;
   }
   loading.value = false;

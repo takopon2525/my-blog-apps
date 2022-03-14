@@ -23,7 +23,7 @@ const handlePostBlog = async () => {
     loading.value = false;
     store.commit("setSnack", {
       isOpen: true,
-      message: "プロフィール編集に失敗しました。",
+      message: "ブログ記事の編集に失敗しました。",
       type: "failed",
     });
     return;

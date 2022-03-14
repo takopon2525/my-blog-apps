@@ -10,6 +10,7 @@ import {
 } from "@headlessui/vue";
 
 const store = useStore();
+const loading = ref(false);
 const props = defineProps({
   post: Object,
 });
@@ -23,7 +24,24 @@ const openModal = () => {
 };
 
 const deletePost = async () => {
-  await store.dispatch("deleteBlog", { blogId: props.post.blogId });
+  try {
+    loading.value = true;
+    await store.dispatch("deleteBlog", { blogId: props.post.blogId });
+    store.commit("setSnack", {
+      isOpen: true,
+      message: "選択した記事が削除されました。",
+      type: "success",
+    });
+  } catch (err) {
+    loading.value = false;
+    store.commit("setSnack", {
+      isOpen: true,
+      message: "選択した記事の削除に失敗しました。",
+      type: "failed",
+    });
+    return;
+  }
+  loading.value = false;
   isOpen.value = false;
 };
 </script>
@@ -61,17 +79,15 @@ const deletePost = async () => {
               </div>
 
               <div class="mt-4">
-                <button
-                  type="button"
-                  class="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                  @click="closeModal"
-                >
+                <button type="button" class="button" @click="closeModal">
                   閉じる
                 </button>
                 <button
                   type="button"
-                  class="ml-2 inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-red-500 border border-transparent rounded-md hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500"
+                  class="ml-2 delete_button"
                   @click="deletePost"
+                  :class="loading ? 'delete_button--disabled' : ''"
+                  :disabled="loading"
                 >
                   削除
                 </button>
