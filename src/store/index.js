@@ -100,6 +100,10 @@ const store = createStore({
         alert(err.message);
       }
     },
+    async logout(context) {
+      await signOut(auth);
+      context.commit("setUser", null);
+    },
     async signup(context, { email, password }) {
       const res = await createUserWithEmailAndPassword(auth, email, password);
       if (res) {
@@ -115,6 +119,13 @@ const store = createStore({
         emial: email,
       };
       await setDoc(docRef, docData);
+    },
+    async updateUser(context, { nickName }) {
+      const docRef = doc(db, "users", context.state.user.uid);
+      const docData = {
+        name: nickName,
+      };
+      await updateDoc(docRef, docData);
     },
     async getUser(context) {
       const docRef = doc(db, "users", context.state.user.uid);
