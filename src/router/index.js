@@ -7,6 +7,7 @@ import EditBlogPreview from "../views/EditBlogPreview.vue";
 import Blog from "../views/Blog.vue";
 import Login from "../views/Login.vue";
 import Signup from "../views/Signup.vue";
+import Profile from "../views/Profile.vue";
 
 const routes = [
   {
@@ -70,6 +71,14 @@ const routes = [
     component: EditBlogPreview,
     meta: {
       title: "EditBlogPreview",
+    },
+  },
+  {
+    path: "/profile",
+    name: "Profile",
+    component: Profile,
+    meta: {
+      title: "Profile",
     },
   },
 ];
