@@ -143,10 +143,14 @@ const handlePostBlog = async () => {
     <div class="mt-5">
       <button
         class="button mr-2 button--disabled"
-        :disabled="!store.state.blogTitle || !store.state.blogTitleImageURL"
+        :class="loading ? 'button--disabled' : ''"
+        :disabled="
+          loading || !store.state.blogTitle || !store.state.blogTitleImageURL
+        "
         @click="handlePostBlog"
       >
-        編集
+        <span v-if="!loading">編集</span>
+        <div v-if="loading" class="button_loading"></div>
       </button>
       <button
         class="button mr-2 button--disabled"

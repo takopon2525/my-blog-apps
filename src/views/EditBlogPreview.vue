@@ -46,8 +46,14 @@ const handlePostBlog = async () => {
       >
         戻る
       </button>
-      <button class="button mr-2" @click="handlePostBlog">
-        <span>編集</span>
+      <button
+        class="button mr-2"
+        :class="loading ? 'button--disabled' : ''"
+        :disabled="loading"
+        @click="handlePostBlog"
+      >
+        <span v-if="!loading">編集</span>
+        <div v-if="loading" class="button_loading"></div>
       </button>
     </div>
   </div>

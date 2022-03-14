@@ -135,6 +135,7 @@ const handlePostBlog = async () => {
     <div class="mt-5">
       <button
         class="button mr-2 button--disabled"
+        :class="loading ? 'button--disabled' : ''"
         :disabled="
           loading || !store.state.blogTitle || !store.state.blogTitleImageURL
         "
