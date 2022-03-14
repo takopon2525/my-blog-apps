@@ -13,6 +13,7 @@ const store = useStore();
 const router = useRouter();
 const blogPhoto = vueRef(null);
 let file = null;
+const loading = vueRef(false);
 const modules = {
   name: "imageUploader",
   module: ImageUploader,
@@ -77,15 +78,28 @@ const handleFileUpload = () => {
 };
 
 const handlePostBlog = async () => {
+  loading.value = true;
   try {
     if (file) {
       await store.dispatch("editPostAll");
     } else {
       await store.dispatch("editPost");
     }
+    store.commit("setSnack", {
+      isOpen: true,
+      message: "ブログ記事の編集に成功しました!",
+      type: "success",
+    });
   } catch (err) {
+    loading.value = false;
+    store.commit("setSnack", {
+      isOpen: true,
+      message: "ブログ記事の編集に失敗しました。",
+      type: "failed",
+    });
     return;
   }
+  loading.value = false;
   router.push("/");
 };
 </script>
@@ -125,10 +139,14 @@ const handlePostBlog = async () => {
     <div class="mt-5">
       <button
         class="button mr-2 button--disabled"
-        :disabled="!store.state.blogTitle || !store.state.blogTitleImageURL"
+        :class="loading ? 'button--disabled' : ''"
+        :disabled="
+          loading || !store.state.blogTitle || !store.state.blogTitleImageURL
+        "
         @click="handlePostBlog"
       >
-        編集
+        <span v-if="!loading">編集</span>
+        <div v-if="loading" class="button_loading"></div>
       </button>
       <button
         class="button mr-2 button--disabled"

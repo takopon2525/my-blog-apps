@@ -28,16 +28,21 @@ const store = createStore({
     unsubscribe: null,
     user: null,
     userInfo: {},
+    blogId: null,
     blogPosts: [],
     blogHTML: "ここから入力してください。",
     blogTitle: null,
     blogTitleImageFile: null,
     blogTitleImageName: null,
     blogTitleImageURL: null,
+    snackbar: false,
+    snackMessage: null,
+    snackType: null,
   },
   mutations: {
     init(state) {
       state.blogHTML = "ここから入力してください。";
+      state.blogId = null;
       state.blogTitle = null;
       state.blogTitleImageFile = null;
       state.blogTitleImageName = null;
@@ -58,6 +63,9 @@ const store = createStore({
     setBlogTitle(state, payload) {
       state.blogTitle = payload;
     },
+    setBlogId(state, payload) {
+      state.blogId = payload;
+    },
     setBlogTitleImageFile(state, payload) {
       state.blogTitleImageFile = payload;
     },
@@ -66,6 +74,11 @@ const store = createStore({
     },
     setBlogTitleImageURL(state, payload) {
       state.blogTitleImageURL = payload;
+    },
+    setSnack(state, { isOpen, message, type }) {
+      state.snackbar = isOpen;
+      state.snackMessage = message;
+      state.snackType = type;
     },
   },
   actions: {
@@ -206,13 +219,13 @@ const store = createStore({
         (error) => {},
         async () => {
           const downLoadURL = await getDownloadURL(uploadTask.snapshot.ref);
-          const docRef = doc(db, "blogPost", context.state.edtiBlogPost.blogId);
+          const docRef = doc(db, "blogPost", context.state.blogId);
           const timestamp = await Date.now();
           const docData = {
             blogId: docRef.id,
-            blogTitle: context.state.editBlogTitle,
+            blogTitle: context.state.blogTitle,
             blogImageURL: downLoadURL,
-            blogHTML: context.state.editBlogHTML,
+            blogHTML: context.state.blogHTML,
             blogEditedAt: Timestamp.fromDate(new Date()),
             date: timestamp,
             blogEditedBy: context.state.userInfo.name,
@@ -223,12 +236,12 @@ const store = createStore({
       );
     },
     async editPost(context) {
-      const docRef = doc(db, "blogPost", context.state.edtiBlogPost.blogId);
-      const timestamp = await Date.now();
+      const docRef = doc(db, "blogPost", context.state.blogId);
+      const timestamp = Date.now();
       const docData = {
         blogId: docRef.id,
-        blogTitle: context.state.editBlogTitle,
-        blogHTML: context.state.editBlogHTML,
+        blogTitle: context.state.blogTitle,
+        blogHTML: context.state.blogHTML,
         blogEditedAt: Timestamp.fromDate(new Date()),
         date: timestamp,
         blogEditedBy: context.state.userInfo.name,

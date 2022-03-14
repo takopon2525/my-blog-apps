@@ -33,6 +33,14 @@
   @apply disabled:cursor-not-allowed disabled:transition-none disabled:bg-gray-300 disabled:hover:bg-gray-300;
 }
 
+.delete_button {
+  @apply rounded-lg text-base bg-red-500 px-3 py-1 text-white font-bold transition ease-in-out delay-150 hover:bg-gray-400 duration-300 cursor-pointer;
+}
+
+.delete_button--disabled {
+  @apply disabled:cursor-not-allowed disabled:transition-none disabled:bg-red-300 disabled:hover:bg-red-300;
+}
+
 .form_button {
   @apply focus:outline-none text-white text-sm bg-sky-400 hover:bg-sky-600 rounded-2xl py-2 w-full transition duration-150 ease-in;
 }
