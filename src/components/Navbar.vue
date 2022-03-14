@@ -2,6 +2,7 @@
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+import ProfileMenu from "../components/ProfileMenu.vue";
 
 const store = useStore();
 const router = useRouter();
@@ -47,6 +48,7 @@ const handleCreatePost = () => {
       >
         <router-link class="nav_link" to="/">ブログ</router-link>
         <a class="nav_link" @click="handleCreatePost">投稿の作成</a>
+        <ProfileMenu />
       </div>
       <div
         v-if="!user"
