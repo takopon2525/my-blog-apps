@@ -19,7 +19,18 @@ const handleSubmit = async () => {
       nickName: nickName.value,
     });
     await store.dispatch("getUser");
+    store.commit("setSnack", {
+      isOpen: true,
+      message: "プロフィール変更に成功しました!",
+      type: "success",
+    });
   } catch (err) {
+    store.commit("setSnack", {
+      isOpen: true,
+      message: "プロフィール変更に成功しました!",
+      type: "failed",
+    });
+    loading.value = false;
     return;
   }
   loading.value = false;

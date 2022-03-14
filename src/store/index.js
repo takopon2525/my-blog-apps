@@ -34,6 +34,9 @@ const store = createStore({
     blogTitleImageFile: null,
     blogTitleImageName: null,
     blogTitleImageURL: null,
+    snackbar: false,
+    snackMessage: null,
+    snackType: null,
   },
   mutations: {
     init(state) {
@@ -66,6 +69,11 @@ const store = createStore({
     },
     setBlogTitleImageURL(state, payload) {
       state.blogTitleImageURL = payload;
+    },
+    setSnack(state, { isOpen, message, type }) {
+      state.snackbar = isOpen;
+      state.snackMessage = message;
+      state.snackType = type;
     },
   },
   actions: {
@@ -223,8 +231,9 @@ const store = createStore({
       );
     },
     async editPost(context) {
+      // blogId参照間違い
       const docRef = doc(db, "blogPost", context.state.edtiBlogPost.blogId);
-      const timestamp = await Date.now();
+      const timestamp = Date.now();
       const docData = {
         blogId: docRef.id,
         blogTitle: context.state.editBlogTitle,
@@ -233,6 +242,7 @@ const store = createStore({
         date: timestamp,
         blogEditedBy: context.state.userInfo.name,
       };
+      debugger
       await updateDoc(docRef, { ...docData });
       router.push({ path: "/" });
     },

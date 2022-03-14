@@ -1,19 +1,34 @@
 <script setup>
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+import { ref } from "vue";
 
 const store = useStore();
 const router = useRouter();
+const loading = ref(false);
 const handlePostBlog = async () => {
+  loading.value = true;
   try {
     if (store.state.blogTitleImageFile) {
       await store.dispatch("editPostAll");
     } else {
       await store.dispatch("editPost");
     }
+    store.commit("setSnack", {
+      isOpen: true,
+      message: "ブログ編集に成功しました!",
+      type: "success",
+    });
   } catch (err) {
+    loading.value = false;
+    store.commit("setSnack", {
+      isOpen: true,
+      message: "プロフィール編集に失敗しました。",
+      type: "failed",
+    });
     return;
   }
+  loading.value = false;
   router.push("/");
 };
 </script>

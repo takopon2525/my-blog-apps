@@ -13,6 +13,7 @@ const store = useStore();
 const router = useRouter();
 const blogPhoto = vueRef(null);
 let file = null;
+const loading = vueRef(false);
 const modules = {
   name: "imageUploader",
   module: ImageUploader,
@@ -77,15 +78,32 @@ const handleFileUpload = () => {
 };
 
 const handlePostBlog = async () => {
+  loading.value = true;
   try {
     if (file) {
+      debugger;
       await store.dispatch("editPostAll");
     } else {
+      debugger;
       await store.dispatch("editPost");
     }
+    debugger;
+    store.commit("setSnack", {
+      isOpen: true,
+      message: "ブログ記事の編集に成功しました!",
+      type: "success",
+    });
   } catch (err) {
+    loading.value = false;
+    store.commit("setSnack", {
+      isOpen: true,
+      message: "ブログ記事の編集に失敗しました。",
+      type: "failed",
+    });
+    console.log("err", err.message);
     return;
   }
+  loading.value = false;
   router.push("/");
 };
 </script>
