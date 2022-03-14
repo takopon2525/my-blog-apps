@@ -81,13 +81,10 @@ const handlePostBlog = async () => {
   loading.value = true;
   try {
     if (file) {
-      debugger;
       await store.dispatch("editPostAll");
     } else {
-      debugger;
       await store.dispatch("editPost");
     }
-    debugger;
     store.commit("setSnack", {
       isOpen: true,
       message: "ブログ記事の編集に成功しました!",
