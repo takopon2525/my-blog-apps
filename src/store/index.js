@@ -91,7 +91,6 @@ const store = createStore({
       try {
         await setPersistence(auth, browserSessionPersistence);
         const res = await signInWithEmailAndPassword(auth, email, password);
-        context.commit("setUser", { ...res.user });
         if (!res) throw new Error("could not complete login");
       } catch (err) {
         alert(err.message);
@@ -99,9 +98,7 @@ const store = createStore({
     },
     async signup(context, { email, password }) {
       const res = await createUserWithEmailAndPassword(auth, email, password);
-      if (res) {
-        context.commit("setUser", res.user);
-      } else {
+      if (!res) {
         throw new Error("could not complete signup");
       }
     },
