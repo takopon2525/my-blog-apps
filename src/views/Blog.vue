@@ -15,7 +15,7 @@ const blogPost = computed(() => {
 });
 
 onMounted(() => {
-  document.querySelectorAll("pre code").forEach((el) => {
+  document.querySelectorAll("pre").forEach((el) => {
     hljs.highlightElement(el);
   });
 });
