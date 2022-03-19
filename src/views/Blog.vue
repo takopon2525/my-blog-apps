@@ -6,6 +6,7 @@ import hljs from "highlight.js";
 import { onMounted } from "vue";
 import "highlight.js/styles/xcode.css";
 import Created from "../assets/icons/created_date.svg";
+import EditedBy from "../assets/icons/edit_date.svg";
 
 const route = useRoute();
 const store = useStore();
@@ -29,6 +30,14 @@ onMounted(() => {
         <img :src="Created" class="h-6 w-auto" />
         <span>{{
           new Date(blogPost.blogCreatedAt.seconds * 1000).toLocaleDateString()
+        }}</span>
+      </div>
+      <div
+        class="text-black flex items-center bg-secondary-100 text-xs uppercase font-bold rounded-full p-2 top-0 mt-2"
+      >
+        <img :src="EditedBy" class="h-6 w-auto" />
+        <span>{{
+          new Date(blogPost.blogEditedAt.seconds * 1000).toLocaleDateString()
         }}</span>
       </div>
     </div>

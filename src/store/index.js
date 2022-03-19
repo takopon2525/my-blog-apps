@@ -97,6 +97,9 @@ const store = createStore({
             blogImageName: doc.data().blogImageName,
             blogImageURL: doc.data().blogImageURL,
             blogCreatedAt: doc.data().blogCreatedAt,
+            blogEditedAt: doc.data().blogEditedAt,
+            blogCreatedBy: doc.data().blogCreatedBy,
+            blogEditedBy: doc.data().blogEditedBy,
           };
           results.push(data);
         });
@@ -185,6 +188,7 @@ const store = createStore({
             blogImageURL: downLoadURL,
             blogHTML: context.state.blogHTML,
             blogCreatedAt: Timestamp.fromDate(new Date()),
+            blogCreatedBy: context.state.userInfo.name,
             date: timestamp,
           };
           await setDoc(docRef, docData);
