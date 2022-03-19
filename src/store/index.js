@@ -69,6 +69,9 @@ const store = createStore({
     setBlogTitleImageFile(state, payload) {
       state.blogTitleImageFile = payload;
     },
+    setBlogId(state, payload) {
+      state.blogId = payload;
+    },
     setBlogTitleImageName(state, payload) {
       state.blogTitleImageName = payload;
     },
