@@ -106,7 +106,7 @@ const store = createStore({
       const docRef = doc(db, "users", uid);
       const docData = {
         name: nickName,
-        emial: email,
+        email: email,
       };
       await setDoc(docRef, docData);
     },
