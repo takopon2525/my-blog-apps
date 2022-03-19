@@ -54,10 +54,14 @@ const editPost = () => {
         >{{ props.post.blogTitle }}</router-link
       >
       <div class="flex">
-        <span class="block text-gray-500 text-sm py-2 mr-2"
-          >編集者：テスト太郎</span
+        <span
+          v-if="props.post.blogEditedBy"
+          class="block text-gray-500 text-sm py-2 mr-2"
+          >編集者：{{ props.post.blogEditedBy }}</span
         >
-        <span class="block text-gray-500 text-sm py-2">作成者：テスト次郎</span>
+        <span v-if="props.post.blogCreatedBy" class="block text-gray-500 text-sm py-2"
+          >作成者：{{ props.post.blogCreatedBy }}</span
+        >
       </div>
     </div>
     <div class="icons" v-if="props.editEnabled">
