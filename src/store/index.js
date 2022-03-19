@@ -28,6 +28,7 @@ const store = createStore({
     unsubscribe: null,
     user: null,
     userInfo: {},
+    blogId: null,
     blogPosts: [],
     blogHTML: "ここから入力してください。",
     blogTitle: null,
@@ -38,6 +39,7 @@ const store = createStore({
   mutations: {
     init(state) {
       state.blogHTML = "ここから入力してください。";
+      state.blogId = null;
       state.blogTitle = null;
       state.blogTitleImageFile = null;
       state.blogTitleImageName = null;
@@ -60,6 +62,9 @@ const store = createStore({
     },
     setBlogTitleImageFile(state, payload) {
       state.blogTitleImageFile = payload;
+    },
+    setBlogId(state, payload) {
+      state.blogId = payload;
     },
     setBlogTitleImageName(state, payload) {
       state.blogTitleImageName = payload;
@@ -195,13 +200,13 @@ const store = createStore({
         (error) => {},
         async () => {
           const downLoadURL = await getDownloadURL(uploadTask.snapshot.ref);
-          const docRef = doc(db, "blogPost", context.state.edtiBlogPost.blogId);
+          const docRef = doc(db, "blogPost", context.state.blogId);
           const timestamp = await Date.now();
           const docData = {
             blogId: docRef.id,
-            blogTitle: context.state.editBlogTitle,
+            blogTitle: context.state.blogTitle,
             blogImageURL: downLoadURL,
-            blogHTML: context.state.editBlogHTML,
+            blogHTML: context.state.blogHTML,
             blogEditedAt: Timestamp.fromDate(new Date()),
             date: timestamp,
             blogEditedBy: context.state.userInfo.name,
@@ -212,12 +217,12 @@ const store = createStore({
       );
     },
     async editPost(context) {
-      const docRef = doc(db, "blogPost", context.state.edtiBlogPost.blogId);
+      const docRef = doc(db, "blogPost", context.state.blogId);
       const timestamp = await Date.now();
       const docData = {
         blogId: docRef.id,
-        blogTitle: context.state.editBlogTitle,
-        blogHTML: context.state.editBlogHTML,
+        blogTitle: context.state.blogTitle,
+        blogHTML: context.state.blogHTML,
         blogEditedAt: Timestamp.fromDate(new Date()),
         date: timestamp,
         blogEditedBy: context.state.userInfo.name,

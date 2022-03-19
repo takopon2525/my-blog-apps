@@ -13,13 +13,13 @@ const props = defineProps({
   post: Object,
 });
 const editPost = () => {
+  store.commit("setBlogId", props.post.blogId);
   store.commit("setBlogTitle", props.post.blogTitle);
   store.commit("setBlogTitleImageName", props.post.blogImageName);
   store.commit("setBlogTitleImageURL", props.post.blogImageURL);
   store.commit("setBlogHTML", props.post.blogHTML);
   router.push("/edit-blog");
 };
-const deletePost = () => {};
 </script>
 <template>
   <div class="card relative">
